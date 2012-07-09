@@ -26,7 +26,7 @@ module NestedForm
       @template.after_nested_form(association) do
         model_object = object.class.reflect_on_association(association).klass.new(model_attrs)
         blueprint = fields_for(association, model_object, :child_index => "new_#{association}", &@fields[association])
-        blueprint_options = {:id => "#{association}_fields_blueprint", :style => 'display: none'}
+        blueprint_options = {:id => "#{([association] + model_attrs.flatten).join('_')}_fields_blueprint", :style => 'display: none'}
         @template.content_tag(:div, blueprint, blueprint_options)
       end
       @template.link_to(*args, &block)
